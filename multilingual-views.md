@@ -109,6 +109,7 @@ function mon_theme_preprocess_node(array &$variables): void {
   $language_manager = \Drupal::languageManager();
   $languages = $language_manager->getLanguages();
 
+  $current_langcode = $language_manager->getCurrentLanguage()->getId();
   $language_links = [];
   foreach ($languages as $langcode => $language) {
     if ($node->hasTranslation($langcode)) {
@@ -118,9 +119,9 @@ function mon_theme_preprocess_node(array &$variables): void {
       $language_links[$langcode] = [
         'title' => $language->getName(),
         'url' => $url->toString(),
-        'active' => $langcode === $language_manager->getCurrentLanguage()->getId(),
+        'active' => $langcode === $current_langcode,
         'langcode' => $langcode,
-        'hreflang' => $langcode,  // Pour SEO
+        'hreflang' => $langcode,
       ];
     }
   }
